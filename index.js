@@ -1,11 +1,15 @@
 const express = require('express');
 const ejs = require('ejs');
 const app = express();
+const cookieParser = require('cookie-parser');
 const port = 8000;
+
+const db = require('./config/mongoose');
 
 const expressLayouts = require('express-ejs-layouts');
 app.use(expressLayouts);
-
+app.use(express.urlencoded());
+app.use(cookieParser());
 //use express router
 //This will redirect every route request to the index.js in the routs folder, which is the entry point for every route
 app.use('/',require('./routes'));

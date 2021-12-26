@@ -6,6 +6,8 @@ const User = require('../models/user');
 const router = express.Router();
 
 const homeController = require('../controllers/home_controllers');
+const usersController = require('../controllers/users_controller');
+const passport = require('passport');
 
 console.log('router loaded');
 
@@ -33,7 +35,13 @@ router.post('/create',function(req,res){
     });
    
     
-})
+});
+//use passport as a middleware to authenticate
+router.post('/create-session',passport.authenticate(
+  'local',
+  {failureRedirect: "/users/sign-in"}
+  ),usersController.createSession);
+
 //for any further routes,access from here
 //router.use('/routeName',require('./routerfile'));
 

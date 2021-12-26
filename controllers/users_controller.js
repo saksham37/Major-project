@@ -17,3 +17,8 @@ module.exports.signUp = function(req,res){
         title: 'Codial | Sign Up'
     })
 }
+
+module.exports.createSession = function(req,res){
+    console.log("Working till createSession ");
+    return res.redirect('/users/profile');
+}

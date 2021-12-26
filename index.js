@@ -6,16 +6,41 @@ const port = 8000;
 
 const db = require('./config/mongoose');
 
+const session = require('express-session');
+const passport = require('passport');
+const passportLocal = require('./config/passport-local-strategy');
+
 const expressLayouts = require('express-ejs-layouts');
 app.use(expressLayouts);
+
 app.use(express.urlencoded());
 app.use(cookieParser());
-//use express router
-//This will redirect every route request to the index.js in the routs folder, which is the entry point for every route
-app.use('/',require('./routes'));
+
 
 app.set('view engine','ejs');
 app.set('views','./views');
+
+app.use(session({
+   name: 'codial',
+   //TODO change the secret before deployment in production mode
+   secret: 'blahsomething',
+   //secret is the key for encryption
+   saveUninitialized: false,
+   resave: false,
+   cookie: {
+       maxAge : (1000*60*100)
+   }
+}));
+
+//passport is also a middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(passport.setAuthenticatedUser);
+
+//use express router
+//This will redirect every route request to the index.js in the routs folder, which is the entry point for every route
+app.use('/',require('./routes'));
 
 app.listen(port,(err)=>{
     if(err)

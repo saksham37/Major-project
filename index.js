@@ -11,6 +11,8 @@ const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 
 const expressLayouts = require('express-ejs-layouts');
+
+const MongoStore = require('connect-mongo');
 app.use(expressLayouts);
 
 app.use(express.urlencoded());
@@ -20,6 +22,7 @@ app.use(cookieParser());
 app.set('view engine','ejs');
 app.set('views','./views');
 
+//Mongo store is used to store the cookie session into the database
 app.use(session({
    name: 'codial',
    //TODO change the secret before deployment in production mode
@@ -29,7 +32,17 @@ app.use(session({
    resave: false,
    cookie: {
        maxAge : (1000*60*100)
-   }
+   },
+   store : new MongoStore(
+       {
+           mongoUrl : 'mongodb://localhost/user_database',
+           mongooseConnection: db,
+           autoRemove: 'disabled'
+       },
+       function(err){
+           console.log(err || 'connect-mongodb setup ok');
+       }
+   )
 }));
 
 //passport is also a middleware

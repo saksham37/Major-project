@@ -52,4 +52,6 @@ passport.setAuthenticatedUser = function(req,res,next){
     }
     return next();
 }
+
+
 module.exports = passport;

@@ -14,7 +14,7 @@ router.get('/sign-in',usersController.signIn);
 
 router.get('/sign-up',usersController.signUp);
 
-
+router.get('/sign-out',usersController.destroySession);
 
 module.exports = router;
 

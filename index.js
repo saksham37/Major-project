@@ -13,6 +13,19 @@ const passportLocal = require('./config/passport-local-strategy');
 const expressLayouts = require('express-ejs-layouts');
 
 const MongoStore = require('connect-mongo');
+
+//sass or scss
+const sassMiddleware = require('node-sass-middleware');
+
+app.use(sassMiddleware({
+    src: './assets/scss',
+    dest: './assets/css',
+    debug: true,
+    outputStyle: 'extended',
+    prefix: '/css'
+}));
+
+
 app.use(expressLayouts);
 
 app.use(express.urlencoded());

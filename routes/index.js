@@ -14,6 +14,8 @@ console.log('router loaded');
 router.get('/',homeController.home);
 
 router.use('/users',require('./users'));
+router.use('/post',require('./posts'));
+
 
 router.post('/create',function(req,res){
     console.log("/n/n/n Working Till Now /n/n/n/n");

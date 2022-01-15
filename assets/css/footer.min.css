@@ -7,6 +7,7 @@ footer {
   height: 5vh;
   font-size: 1.3rem;
   width: 99%; }
-  footer #footer-links {
-    justify-content: space-around !important;
-    width: 50%; }
+
+footer #footer-links {
+  justify-content: space-around !important;
+  width: 50%; }

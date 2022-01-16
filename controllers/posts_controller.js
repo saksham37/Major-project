@@ -1,12 +1,12 @@
-const Post = require('../models/post');
+const Post = require('../models/post')
 
-module.exports.create = (req,res)=>{
+module.exports.create = function(req, res){
     Post.create({
         content: req.body.content,
         user: req.user._id
-    },function(err,post){
-        if(err){console.log("Error in saving the Post into the Databse"); return;}
-        res.redirect('back');
-    });
+    }, function(err, post){
+        if(err){console.log('error in creating a post'); return;}
 
+        return res.redirect('back');
+    });
 }

@@ -10,6 +10,19 @@
             <textarea name="content" id="" cols="30" rows="3"></textarea>
             <input type="submit" value="Post">
         </form>
+        <div id="post-display">
+              <ul>
+                  <%for(post of posts){%>
+                    <li>
+                       <%=post.content%>
+                        <br>
+                       <small>
+                           <%=post.user.name%>
+                       </small>
+                    </li>
+                    <%}%>
+              </ul>
+        </div>
 
     </section>
 

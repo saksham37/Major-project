@@ -12,6 +12,7 @@ const postSchema = new mongoose.Schema({
 
     },
     //In the Post's schema we'll also be storing all the id's of the comments made on every post
+    //Every post will have the comment id's of every comment that was made on the post
     comments: [
           {
               type: mongoose.Schema.Types.ObjectId,

@@ -1,7 +1,6 @@
 //creating schema for comments
-const { text } = require('express');
 const mongoose = require('mongoose');
-
+const Post = require('../models/post');
 const commentSchema = new mongoose.Schema({
       content: {
           type: String,
@@ -10,7 +9,13 @@ const commentSchema = new mongoose.Schema({
       user:{
           type: mongoose.Schema.Types.ObjectId,
           ref: 'User'
+      },
+      post: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Post'
       }
+},{
+    timestamps:true
 });
 
 

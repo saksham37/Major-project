@@ -2,8 +2,6 @@
          Codeial / <%=title%> 
    </h1>
 
-
-
     <section id = "feed-posts">
         <h4>posts</h4>
         <%if(locals.user){%>
@@ -21,8 +19,18 @@
                        <small>
                            <%=post.user.name%>
                        </small>
+                       <div class="post-comments">
+                         <%if(locals.user){%>
+                            <form action="/comments/create" method="post">
+                                <input type="text" name="content" placeholder="Comment here..">
+                                 <input type="hidden" name="post" value="<%=post._id%>">
+                                 <input type="submit" value="Add Comment">
+                            </form>
+                          <%}%>
+                       </div>
                     </li>
                     <%}%>
+
               </ul>
         </div>
 

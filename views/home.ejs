@@ -27,7 +27,24 @@
                                  <input type="submit" value="Add Comment">
                             </form>
                           <%}%>
+                          <div class = "post-comments-list">
+                            <ul class="post-comments-<%=post._id%>">
+                              <%for(comment of post.comments){%>
+                                <li>
+                                  <p>
+                                    <%=comment.content%>
+                                  </p>
+                                  <small>
+                                    <%=comment.user.name%>
+                                  </small>
+                                </li>
+                                
+                              <%}%>
+                            </ul>
+  
+                          </div>
                        </div>
+                       <!-- The user need not be logged in while looking at the comments -->
                     </li>
                     <%}%>
 

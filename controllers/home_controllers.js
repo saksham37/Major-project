@@ -12,7 +12,14 @@ module.exports.home = function(req, res){
     
     //Pre-population means, if there is any referenced object in the document, all its information will be loaded for every document
     //After pre-population the post.user contains the entire info about the user instead of just the referenced object Id
-    Post.find({}).populate('user').exec((err,posts)=>{
+    Post.find({}).populate('user')
+    .populate({
+        path: 'comments',
+        populate: {
+            path: 'user'
+        }
+    })
+    .exec((err,posts)=>{
         if(err){console.log("unable to load posts from the database"); return;}
         return res.render('home',{
             title: "Home",

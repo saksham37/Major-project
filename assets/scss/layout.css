@@ -1,4 +1,11 @@
 body {
   margin: 0;
 }
-/*# sourceMappingURL=layout.css.map */
+
+#layout-container {
+  height: 90vh;
+  border: 4px solid black;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+}

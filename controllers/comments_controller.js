@@ -1,3 +1,4 @@
+const { localsName } = require('ejs');
 const Comment = require('../models/comment');
 const Post = require('../models/post');
 
@@ -19,4 +20,20 @@ module.exports.create = function(req,res){
             });
         }
     })
+}
+module.exports.destroy = function(req,res){
+    console.log("Comment deletion called ");
+    // req must have the id of the deleted comment 
+    //We need to delete the comment both front the 'Comment' and also from the array of comments from the post
+    Comment.findById(req.params.id,(err,comment)=>{
+        //the user of the comment found should match the current logged in user in locals.user
+        if(comment.user==req.user.id){
+            console.log("id of the post on which the comment was made ",comment.post);
+            let postId = comment.post;
+            Post.findByIdAndUpdate(postId, { $pull: { comments: req.params.id} });
+               comment.remove(); //deleting the origin comment from the schema
+
+        }
+         return res.redirect('back');
+    });
 }

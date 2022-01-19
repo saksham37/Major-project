@@ -36,6 +36,12 @@
                             <ul class="post-comments-<%=post._id%>">
                               <%for(comment of post.comments){%>
                                 <li>
+                                  <small>
+                                    <!-- see if the user is logged in and the user's id matches the comment's user -->
+                                    <%if(locals.user && locals.user.id == comment.user.id){%>
+                                       <a href="/comments/destroy/<%=comment.id%>">X</a>
+                                    <%}%>
+                                  </small>
                                   <p>
                                     <%=comment.content%>
                                   </p>

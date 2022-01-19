@@ -25,7 +25,7 @@ app.use(sassMiddleware({
     prefix: '/css'
 }));
 
-
+app.use(express.static('./assets'));
 app.use(expressLayouts);
 //extract styles and script from the sub-pages into the style
 app.set('layout extractStyles',true);

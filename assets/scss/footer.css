@@ -1,8 +1,8 @@
 footer {
-  position: absolute;
+  position: sticky;
   bottom: 0;
   color: white;
-  background-color: blue;
+  background-color: gray;
   justify-content: space-around !important;
   height: 5vh;
   font-size: 1.3rem;

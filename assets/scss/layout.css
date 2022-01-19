@@ -1,9 +1,11 @@
 body {
-  margin: 0; }
+  margin: 0;
+}
 
 #layout-container {
   height: 90vh;
   border: 4px solid black;
   display: flex;
   flex-direction: column;
-  overflow: scroll; }
+  overflow: scroll;
+}

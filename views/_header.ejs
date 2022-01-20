@@ -5,7 +5,7 @@
     <ul class="d-flex">
         <% if(locals.user){%>
               <li class="header-btn d-flex green-black">
-                  <a href="/users/profile">
+                  <a href="/users/profile/<%=user.id%>">
                       <%=user.name%>
                   </a>
                </li>

@@ -1,0 +1,31 @@
+<li>
+    <%if(locals.user && post.user.id == locals.user.id){%>
+    <small>
+      <a href="/posts/destroy/<%=post.id%>">X</a>
+    </small>
+    <%}%>
+     <%=post.content%>
+      <br>
+     <small>
+         <%=post.user.name%>
+     </small>
+     <div class="post-comments">
+       <%if(locals.user){%>
+          <form action="/comments/create" method="post">
+              <input type="text" name="content" placeholder="Comment here..">
+               <input type="hidden" name="post" value="<%=post._id%>">
+               <input type="submit" value="Add Comment">
+          </form>
+        <%}%>
+        <div class = "post-comments-list">
+          <ul class="post-comments-<%=post._id%>">
+            <%for(comment of post.comments){%>
+              <%-include('_comment')%>
+              
+            <%}%>
+          </ul>
+
+        </div>
+     </div>
+     <!-- The user need not be logged in while looking at the comments -->
+  </li>

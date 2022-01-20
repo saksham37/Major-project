@@ -1,5 +1,5 @@
 const Post = require('../models/post');
-
+const User = require('../models/user');
 module.exports.home = function(req, res){
     
     // Post.find({},(err,posts)=>{
@@ -21,10 +21,17 @@ module.exports.home = function(req, res){
     })
     .exec((err,posts)=>{
         if(err){console.log("unable to load posts from the database"); return;}
-        return res.render('home',{
-            title: "Home",
-            posts
+        //We need to pass all the users in the context to show them as freind list
+        User.find({},(err,users)=>{
+            if(err){console.log("Unable to access the users from the db ",err); return ;}
+            return res.render('home',{
+                title: "Home",
+                posts,
+                all_users:users
+            });
         });
+        //all the things passed in the context are accessible inside the locals in the views
+       
     })
     
     // return res.render('home', {

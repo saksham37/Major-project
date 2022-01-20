@@ -13,54 +13,19 @@
         <div id="post-display">
               <ul>
                   <%for(post of posts){%>
-                    <li>
-                      <%if(locals.user && post.user.id == locals.user.id){%>
-                      <small>
-                        <a href="/posts/destroy/<%=post.id%>">X</a>
-                      </small>
-                      <%}%>
-                       <%=post.content%>
-                        <br>
-                       <small>
-                           <%=post.user.name%>
-                       </small>
-                       <div class="post-comments">
-                         <%if(locals.user){%>
-                            <form action="/comments/create" method="post">
-                                <input type="text" name="content" placeholder="Comment here..">
-                                 <input type="hidden" name="post" value="<%=post._id%>">
-                                 <input type="submit" value="Add Comment">
-                            </form>
-                          <%}%>
-                          <div class = "post-comments-list">
-                            <ul class="post-comments-<%=post._id%>">
-                              <%for(comment of post.comments){%>
-                                <li>
-                                  <small>
-                                    <!-- see if the user is logged in and the user's id matches the comment's user -->
-                                    <%if(locals.user && locals.user.id == comment.user.id){%>
-                                       <a href="/comments/destroy/<%=comment.id%>">X</a>
-                                    <%}%>
-                                  </small>
-                                  <p>
-                                    <%=comment.content%>
-                                  </p>
-                                  <small>
-                                    <%=comment.user.name%>
-                                  </small>
-                                </li>
-                                
-                              <%}%>
-                            </ul>
-  
-                          </div>
-                       </div>
-                       <!-- The user need not be logged in while looking at the comments -->
-                    </li>
+                    <%-include('_post')%>
                     <%}%>
 
               </ul>
         </div>
 
     </section>
+
+    <!-- we'll be showing the list of all the users on the homepage under the freinds section  -->'
+   <section id="friend-list">
+      <%for(u of locals.all_users){%>
+
+           <a href="/users/profile/<%=u.id%>"><%=u.name%></a><br>
+      <%}%>
+   </section>
 

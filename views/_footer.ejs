@@ -8,10 +8,12 @@
                 Home
             </a>
         </span>
+        <%if(locals.user){%>
         <span>
-            <a href="/users/profile">
+            <a href="/users/profile/<%=locals.user.id%>">
                 Profile
             </a>
         </span>
+        <%}%>
     </div>
 </footer>

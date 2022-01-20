@@ -4,7 +4,7 @@
 </h1>
 
 <div>
-    <%if(locals.user.id == profile_user.id){%>
+    <%if(locals.user && locals.user.id == profile_user.id){%>
      
         <!-- if the current logged in user opens the profile page, we'll display the form to update the user's information -->
         <form action="/users/update/<%=locals.user.id%>" method="post">

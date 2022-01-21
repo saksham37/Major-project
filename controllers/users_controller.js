@@ -25,7 +25,7 @@ module.exports.update = function(req,res){
 // render the sign up page
 module.exports.signUp = function(req, res){
     if (req.isAuthenticated()){
-        return res.redirect('/users/profile');
+        return res.redirect('/');
     }
 
 
@@ -39,7 +39,7 @@ module.exports.signUp = function(req, res){
 module.exports.signIn = function(req, res){
 
     if (req.isAuthenticated()){
-        return res.redirect('/users/profile');
+        return res.redirect('/');
     }
     return res.render('sign_in_page', {
         title: "Codeial | Sign In"

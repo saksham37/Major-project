@@ -16,6 +16,8 @@ const MongoStore = require('connect-mongo');
 
 //sass or scss
 const sassMiddleware = require('node-sass-middleware');
+const flash = require('connect-flash');
+const customFlashMiddleware = require('./models/middleware');
 
 app.use(sassMiddleware({
     src: './assets/scss',
@@ -67,6 +69,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
+
+app.use(flash()); 
+app.use(customFlashMiddleware.setFlash);
+
+
 
 //use express router
 //This will redirect every route request to the index.js in the routs folder, which is the entry point for every route

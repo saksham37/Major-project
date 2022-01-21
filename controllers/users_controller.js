@@ -43,7 +43,7 @@ module.exports.signIn = function(req, res){
     }
     return res.render('sign_in_page', {
         title: "Codeial | Sign In"
-    })
+    });
 }
 
 // get the sign up data
@@ -73,13 +73,16 @@ module.exports.create = async function(req, res){
 
 // sign in and create a session for the user
 module.exports.createSession = function(req, res){
-    return res.render('user_profile',{
-        title: "User|Profile",
-       profile_user:req.user
-    });
+    req.flash('success','Logged in Successfully');
+    // return res.render('user_profile',{
+    //     title: "User|Profile",
+    //    profile_user:req.user
+    // });
+    return res.redirect('/');
 }
 
 module.exports.destroySession = function(req, res){
+    req.flash('success','You have been Logged Out');
     req.logout();
 
     return res.redirect('/');

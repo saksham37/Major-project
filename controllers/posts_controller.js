@@ -1,33 +1,35 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
-module.exports.create = function(req, res){
-    Post.create({
+module.exports.create = async function(req, res){
+    let post = await Post.create({
         content: req.body.content,
         user: req.user._id
-    }, function(err, post){
-        if(err){console.log('error in creating a post'); return;}
+    });
 
         return res.redirect('back');
-    });
 }
 //Deleting a post in the database
-module.exports.destroy = function(req,res){
+module.exports.destroy = async function(req,res){
       //Post ki id se dhundo post ko
-      console.log("delete post controller called ");
-      console.log(req.params);
-      console.log(req.user.id);
-      Post.findById(req.params.id,function(err,post){
-          if(err){console.log("Error in finding the post in the database"); return;}
-            console.log("found the post");
-          //.id means converting the objectId into string
-          console.log(post.id);
-          if(post.user==req.user.id){
-              console.log("id's matched !!");
-             post.remove();//automatic function provided by mongoose to delete a document
-             //Now we need to delete all the comments of this particular post
-              Comment.deleteMany({post:req.params.id},(err)=>{
-                  res.redirect('back');
-              });
-          }
-      })
+      try{
+        console.log("delete post controller called ");
+        console.log(req.params);
+        console.log(req.user.id);
+        let post = await Post.findById(req.params.id);
+  
+            if(post.user==req.user.id){
+                console.log("id's matched !!");
+               post.remove();//automatic function provided by mongoose to delete a document
+               //Now we need to delete all the comments of this particular post
+               await Comment.deleteMany({post:req.params.id});
+  
+                    res.redirect('back');
+            }
+      }catch(err){
+         if(err){
+             console.log("Error in posts controller -> destroy function",err);
+             return;
+         }
+      }
+     
 }

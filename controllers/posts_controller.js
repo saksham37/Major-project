@@ -6,6 +6,8 @@ module.exports.create = async function(req, res){
         user: req.user._id
     });
 
+    req.flash('success',"Post Created Successfully");
+
         return res.redirect('back');
 }
 //Deleting a post in the database
@@ -22,12 +24,14 @@ module.exports.destroy = async function(req,res){
                post.remove();//automatic function provided by mongoose to delete a document
                //Now we need to delete all the comments of this particular post
                await Comment.deleteMany({post:req.params.id});
+               req.flash('success','Post Deleted Successfully');
   
                     res.redirect('back');
             }
       }catch(err){
          if(err){
              console.log("Error in posts controller -> destroy function",err);
+             req.flash('error',err);
              return;
          }
       }

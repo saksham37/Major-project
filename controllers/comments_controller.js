@@ -16,10 +16,15 @@ module.exports.create = async function(req,res){
             await post.comments.push(comment); //--> this the functionality given by mongoose
                 //Whenever i am making changes to some collection/document we need to save changes
                 post.save();
+            req.flash('success','Comment Created Successfully');
                 res.redirect('/');
         }
     }catch(err){
-        if(err){console.log("Error in comments controller -> create function",err); return;}
+        if(err){
+            console.log("Error in comments controller -> create function",err);
+            req.flash('error',err);
+             return;
+        }
     }
    
 }
@@ -34,10 +39,15 @@ module.exports.destroy = async function(req,res){
                 let postId = comment.post;
                 await Post.findByIdAndUpdate(postId, { $pull: { comments: req.params.id} });
                    comment.remove(); //deleting the origin comment from the schema
+                req.flash('success','Comment Deleted Successfully');
             }
              return res.redirect('back');
     }catch(err){
-        if(err){console.log("Erron in comments controller ",err); return ;}
+        if(err){
+            console.log("Error in comments controller ",err);
+            req.flash('error',err);
+             return ;
+        }
     }
    
 }

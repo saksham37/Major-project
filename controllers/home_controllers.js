@@ -13,7 +13,9 @@ module.exports.home = async function(req, res){
     //Pre-population means, if there is any referenced object in the document, all its information will be loaded for every document
     //After pre-population the post.user contains the entire info about the user instead of just the referenced object Id
     try{
-        let posts = await Post.find({}).populate('user')
+        let posts = await Post.find({})
+        .sort('-createdAt')
+        .populate('user')
         .populate({
             path: 'comments',
             populate: {

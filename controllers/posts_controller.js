@@ -1,11 +1,21 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
 module.exports.create = async function(req, res){
+    console.log(req.body);
     let post = await Post.create({
         content: req.body.content,
         user: req.user._id
-    });
-
+    })
+    // Post.find({}).populate('user');
+     if(req.xhr){
+         //if request is an xhr request
+         return res.status(200).json({
+             data: {
+                 post: post
+             },
+             message: "Post Created"
+         });
+     }
     req.flash('success',"Post Created Successfully");
 
         return res.redirect('back');
@@ -24,6 +34,16 @@ module.exports.destroy = async function(req,res){
                post.remove();//automatic function provided by mongoose to delete a document
                //Now we need to delete all the comments of this particular post
                await Comment.deleteMany({post:req.params.id});
+
+               if(req.xhr){
+                   return res.status(200).json({
+                       data: {
+                           post_id: req.params.id //this will be sent as response back to the jquery request
+                       },
+                       message: "Post deleted"
+
+                   });
+               }
                req.flash('success','Post Deleted Successfully');
   
                     res.redirect('back');

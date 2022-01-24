@@ -100,7 +100,11 @@
             })
         });
     }
+    let allDeletePostLinks = $('.delete-post-btn');//it selects all the delete post buttons in the dom
 
+    for(link of allDeletePostLinks){
+        deletePost(link);
+    }
 
 
     createPost();

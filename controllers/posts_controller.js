@@ -16,6 +16,7 @@ module.exports.create = async function(req, res){
              message: "Post Created"
          });
      }
+
     req.flash('success',"Post Created Successfully");
 
         return res.redirect('back');
@@ -45,7 +46,6 @@ module.exports.destroy = async function(req,res){
                    });
                }
                req.flash('success','Post Deleted Successfully');
-  
                     res.redirect('back');
             }
       }catch(err){

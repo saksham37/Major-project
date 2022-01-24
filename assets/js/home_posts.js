@@ -1,6 +1,23 @@
 {
     console.log("Welcome to the posts");
-
+    let successNotification = function(successText){
+        new Noty({
+            theme:'relax',
+            text: successText,
+            type: 'success',
+            layout: 'topRight',
+            timeout: 1500
+        }).show();
+    }
+    let errorNotification = function(errorText){
+        new Noty({
+            theme:'relax',
+            text: errorText,
+            type: 'error',
+            layout: 'topRight',
+            timeout: 1500
+        }).show();
+    }
     //createPost function will send the form data from the browser to the server(to the posts controller)
     let createPost = function(){
         let newPostForm = $('#new-post-form');
@@ -20,6 +37,8 @@
                     let newPost = newPostDom(data.data.post);
                     console.log(data.data.post);
                     $('#post-list-container>ul').prepend(newPost);
+                    //after successfully pushing the post into the dom show the notification
+                    successNotification('Post Created Successfully');
                     deletePost($(' .delete-post-btn',newPost));
                     console.log(data);
                 },
@@ -72,6 +91,8 @@
                 success: function(data){
                  //we will remove the post from the dom
                  $(`#post-${data.data.post_id}`).remove();
+                 //after successfully deleting the post show the notification
+                 successNotification('Post Deleted Successfully');
                 },
                 error: function(error){
                   console.log(error.responseText);

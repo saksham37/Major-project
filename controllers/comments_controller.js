@@ -3,7 +3,8 @@ const Comment = require('../models/comment');
 const Post = require('../models/post');
 
 module.exports.create = async function(req,res){
-    console.log("Comments Controller called ");
+    console.log("Comments Controller called ",req.body);
+    // console.log(req);
     try{
         let post = await Post.findById(req.body.post);
         if(post){
@@ -12,10 +13,21 @@ module.exports.create = async function(req,res){
                 post: req.body.post,
                 user: req.user._id
             });
-            
+            console.log("line 16");
             await post.comments.push(comment); //--> this the functionality given by mongoose
                 //Whenever i am making changes to some collection/document we need to save changes
                 post.save();
+
+            await comment.populate('user');
+            
+            if(req.xhr){
+                return res.status(200).json({
+                    data:{
+                        comment:comment
+                    },
+                    message: "Comment created succesfully"
+                });
+            }
             req.flash('success','Comment Created Successfully');
                 res.redirect('/');
         }
@@ -39,6 +51,13 @@ module.exports.destroy = async function(req,res){
                 let postId = comment.post;
                 await Post.findByIdAndUpdate(postId, { $pull: { comments: req.params.id} });
                    comment.remove(); //deleting the origin comment from the schema
+
+                   if(req.xhr){
+                       return res.status(200).json({
+                           data: req.params.id,
+                           message: "Comment deleted successfully"
+                       });
+                    }
                 req.flash('success','Comment Deleted Successfully');
             }
              return res.redirect('back');

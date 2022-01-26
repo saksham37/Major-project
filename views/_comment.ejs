@@ -1,8 +1,8 @@
-<li>
+<li id="comment-<%=comment._id%>">
     <small>
       <!-- see if the user is logged in and the user's id matches the comment's user -->
       <%if(locals.user && locals.user.id == comment.user.id){%>
-         <a href="/comments/destroy/<%=comment.id%>">X</a>
+         <a href="/comments/destroy/<%=comment.id%>" class = "delete-comment-btn">X</a>
       <%}%>
     </small>
     <p>
@@ -11,4 +11,4 @@
     <small>
       <%=comment.user.name%>
     </small>
-  </li>
+</li>

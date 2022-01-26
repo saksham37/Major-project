@@ -1,15 +1,14 @@
 <link rel="stylesheet" href="/css/user_profile.css">
-<h1>
-    Codieal | User Profile
-</h1>
 
+<img src="<%=user.avatar%>" alt="<%=user.name%>" width="100">
 <div>
     <%if(locals.user && locals.user.id == profile_user.id){%>
      
         <!-- if the current logged in user opens the profile page, we'll display the form to update the user's information -->
-        <form action="/users/update/<%=locals.user.id%>" method="post">
+        <form action="/users/update/<%=locals.user.id%>" enctype="multipart/form-data" method="post">
             <input type="text" name="name" placeholder="Enter Name" value="<%=user.name%>">
             <input type="email" name="email" placeholder="Enter Email" value="<%=user.email%>">
+            <input type="file" name="avatar" placeholder="profile-picture">
             <input type="submit" value="Update">
         </form>
 

@@ -1,5 +1,6 @@
 const User = require('../models/user');
-
+const fs = require('fs');
+const path = require('path');
 
 module.exports.profile = function(req, res){
     User.findById(req.params.id,(err,user)=>{
@@ -11,12 +12,34 @@ module.exports.profile = function(req, res){
    
 }
 
-module.exports.update = function(req,res){
+module.exports.update = async function(req,res){
     if(req.user.id==req.params.id){
-        User.findByIdAndUpdate(req.user.id,{name: req.body.name,email: req.body.email},(err,user)=>{
-            if(err){console.log("error in updating the user in the database",err); return;}
+    //   User.findByIdAndUpdate(req.user.id,{name: req.body.name,email: req.body.email},(err,user)=>{
+    //         if(err){console.log("error in updating the user in the database",err); return;}
+    //         return res.redirect('back');
+    //     })
+    try{
+        let user = await User.findByIdAndUpdate(req.params.id);
+        User.uploadedAvatar(req,res,function(err){
+            if(err){console.log("Error in users_controller-->update function",err); return;}
+            user.name = req.body.name;
+            user.email = req.body.email;
+
+            if(req.file){
+                if(user.avatar){
+                   fs.unlinkSync(path.join(__dirname,'..',user.avatar));
+                   //this will remove the file kept at the location/path specified
+                }
+                //agar file hai to hi path set karenge
+                user.avatar = User.avatarPath + '/' + req.file.filename;
+            }
+            user.save();
             return res.redirect('back');
         })
+    }catch(err){
+        req.flash('error',err);
+        return res.redirec('back');
+    }
     }else{
         return res.status(401).send('Unauthorized');
     }
